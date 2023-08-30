@@ -5,16 +5,27 @@ import { searchCities } from "../../redux/actions";
 
 function Header() {
   const dispatch: AppDispatch = useDispatch();
-  const { search } = useSelector((state: GlobalStateProps) => state.app);
+  const { search, hasError } = useSelector((state: GlobalStateProps) => state.app);
 
   const [term, setTerm] = useState('');
+
+  if(hasError) {
+    alert('Não foi possível encontrar cidades para este DDD');
+  }
 
   return (
     <header className="header">
       <h1>Cidades por DDD</h1>
       <div>
-        <input type="text" onChange={ ({ target }) => setTerm(target.value) } />
-        <button type="button" onClick={ () => dispatch(searchCities(term)) }>
+        <input 
+          type="text"
+          placeholder="Digite o DDD"
+          onChange={ ({ target }) => setTerm(target.value) }
+        />
+        <button 
+          type="button"
+          onClick={ () => dispatch(searchCities(term)) }
+        >
           Pesquisar
         </button>
       </div>
